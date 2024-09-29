@@ -1,0 +1,12 @@
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout private.key -out certificate.crt
+chmod 644 certificate.crt
+chmod 600 private.key
+
+1) go to browser settings 
+2) then go to privacy and security 
+3) move to certificate section 
+4) view certificates
+5) go to Authorized tab 
+6) click on import button 
+7) add your certificate there in the Authorized section
+

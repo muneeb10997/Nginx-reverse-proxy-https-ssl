@@ -1,0 +1,50 @@
+version: '3'
+services:
+  app1-cont:
+    build:
+      context: /home/muneeb/Documents/Nginx-reverse-proxy-https/flask-nginx/app1
+      dockerfile: Dockerfile 
+    image: app1-img:1
+    # ports:
+    #   - '5001:5000'
+    container_name: app1-contain
+    networks:
+      - my_network
+    volumes:
+      - app1_volume:/app1-dir
+
+  app2-cont:
+    build:
+      context: /home/muneeb/Documents/Nginx-reverse-proxy-https/flask-nginx/app2 
+      dockerfile: Dockerfile  
+    image: app2-img:1 
+    # ports:
+    #   - '5002:5000'
+    container_name: app2-contain
+    networks:
+      - my_network
+    volumes:
+      - app2_volume:/app2-dir
+
+  nginx-cont:
+    image: nginx:latest  
+    container_name: nginx-cont
+    ports:
+      - '80:80'
+      - '443:443'
+    networks:
+      - my_network
+    volumes:
+      - /home/muneeb/Documents/Nginx-reverse-proxy-https/nginx.conf:/etc/nginx/nginx.conf
+      - /home/muneeb/Documents/Nginx-reverse-proxy-https/ssl:/etc/nginx/ssl
+
+networks:
+  my_network:
+    driver: bridge
+    name: my_network
+
+volumes:
+  app1_volume:
+    name: app1_volume
+  app2_volume:
+    name: app2_volume
